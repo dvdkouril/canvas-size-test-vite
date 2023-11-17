@@ -1,6 +1,31 @@
 <script>
-  import { T } from '@threlte/core'
+  import { T, useThrelte, useFrame } from '@threlte/core'
   import { ContactShadows, Float, Grid, OrbitControls } from '@threlte/extras'
+  import { onMount } from 'svelte';
+
+  const { size } = useThrelte();
+  let canvasWidth = 123;
+  let canvasHeight = 123;
+
+  $: sizeChanged($size);
+
+  const sizeChanged = (size) => {
+    console.log("size changed: " + size.width + ", " + size.height);
+    canvasWidth = size.width;
+    canvasHeight = size.height;
+  }
+
+const printCanvasSize = () => {
+    console.log("canvas size: " + canvasWidth + ", " + canvasHeight);
+  };
+
+  onMount(() => {
+    printCanvasSize();
+  });
+
+  useFrame(() => {
+    printCanvasSize();
+  });
 </script>
 
 <T.PerspectiveCamera
